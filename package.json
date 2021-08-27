@@ -18,5 +18,8 @@
   "homepage": "https://github.com/KKonaOG/BullyBot#readme",
   "dependencies": {
     "discord.js": "^13.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
   }
 }
