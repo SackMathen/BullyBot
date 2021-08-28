@@ -1,3 +1,4 @@
+//The imports
 const fs = require('fs');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -8,7 +9,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 const api_commands = [];
 
-//Iterates through all .js files in dir /commands/, adds them to list of bot commands (?)
+//Iterates through all .js files in dir /commands/, adds them to list of bot commands
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command_file = require(`./commands/${file}`);
@@ -18,6 +19,7 @@ for (const file of commandFiles) {
     }
 }
 
+// Using the Discord API push it to the Discord Server
 const rest = new REST({ version: '9' }).setToken(access_token);
 
 (async () => {
@@ -37,6 +39,7 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
+//Ignore non-commands, or look up actual commands
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -45,7 +48,7 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute(interaction);
+        await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
 		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

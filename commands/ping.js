@@ -1,9 +1,9 @@
 // Demo File
-const { SlashCommandBuilder, italic } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 class Ping {
-    #PongEnabled = true;
-    data = null
+    #pongEnabled = true;
+    data = null;
 
     constructor() {
         this.data = [new SlashCommandBuilder().setName("ping").setDescription("replies with pong"), 
@@ -15,9 +15,9 @@ class Ping {
         // This worked first try. We have reached god tier programming.
         const cmd = interaction.commandName;
         if (cmd == "onlypong") {
-            this.#PongEnabled = false;
-            interaction.reply("The bot will now only respond to pings.");
-        } else if (cmd == "pong" && this.#PongEnabled) {
+            this.#pongEnabled = false;
+            return interaction.reply("The bot will now only respond to pings.");
+        } else if (cmd == "pong" && this.#pongEnabled) {
                 return interaction.reply("Ping");
         } else if ("ping") {
             return interaction.reply("Pong");
