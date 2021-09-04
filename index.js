@@ -1,7 +1,8 @@
 // Require the necessary discord.js classes
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, Permissions } = require('discord.js');
+const fs = require('fs');
 
 // Events
 const PermaThreads = require('./events/permathreads');
@@ -13,6 +14,8 @@ const UnWatchThread = require('./commands/unwatchthread');
 const WatchThread = require('./commands/watchthread');
 const AddReactRole = require('./commands/addreactrole');
 const RemoveReactRole = require('./commands/removereactrole');
+const AddMod = require('./commands/addmod');
+const RemoveMod = require('./commands/removemod');
 
 
 // Config
@@ -21,7 +24,7 @@ const config = require('./config.json');
 const rest = new REST({version: '9'}).setToken(config.access_token);
 const api_commands = [];
 
-api_commands.push(WatchThread.command(), UnWatchThread.command(), AddReactRole.command(), RemoveReactRole.command());
+api_commands.push(WatchThread.command(), UnWatchThread.command(), AddReactRole.command(), RemoveReactRole.command(), AddMod.command(), RemoveMod.command());
 
 
 (async() => {
@@ -43,13 +46,29 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
 	console.log('Ready!');
+	client.user.setActivity('the game of life', {type: 'PLAYING'})
 });
 
 client.on('interactionCreate', (interaction) => {
-	WatchThread.execute(interaction);
-	UnWatchThread.execute(interaction);
-	AddReactRole.execute(interaction);
-	RemoveReactRole.execute(interaction);
+	const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
+	let canAccess = false;
+	for(let element in json_mods.mods) {
+		if(interaction.member.roles.cache.some(role=> role.id === json_mods.mods[element])) {
+			canAccess = true;
+		}
+	}
+
+	if (!canAccess && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+		interaction.reply("Commands are for mods ya ding-dong!");
+
+	} else {
+		AddMod.execute(interaction);
+		RemoveMod.execute(interaction);
+		WatchThread.execute(interaction);
+		UnWatchThread.execute(interaction);
+		AddReactRole.execute(interaction);
+		RemoveReactRole.execute(interaction);
+	}
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
