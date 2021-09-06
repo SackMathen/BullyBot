@@ -13,7 +13,6 @@ class AddReactRole {
         return api_command;
     }
     async execute(interaction) {
-        if (!interaction.isCommand()) return;
         if(interaction.commandName === 'addreactrole') {
             const channel = interaction.options.getChannel('channel');
             const message_id = interaction.options.getString('messageid');
