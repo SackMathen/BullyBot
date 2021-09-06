@@ -29,7 +29,7 @@ function setupMemes() {
             option.setName("meme").setDescription("The name of the meme").setRequired(true);
             return choiceGenerator(new_cmd, option)
         })
-        .addStringOption(option => option.setName("textboxone").setDescription("Text to be placed in the first box of the meme").setRequired(true))
+        .addStringOption(option => option.setName("textboxone").setDescription("Text to be placed in the first box of the meme").setRequired(false))
         .addStringOption(option => option.setName("textboxtwo").setDescription("Text to be placed in the second box of the meme").setRequired(false));
         api_commands.push(new_cmd);
         meme_gen_count++;
@@ -48,6 +48,9 @@ class MakeMeme {
             var meme_id = interaction.options.getString('meme');
             var box_1 = interaction.options.getString("textboxone");
             var box_2 = interaction.options.getString("textboxtwo");
+            if (box_1 == undefined) {
+                box_1 = "";
+            }
             if (box_2 == undefined) {
                 box_2 = "";
             }
