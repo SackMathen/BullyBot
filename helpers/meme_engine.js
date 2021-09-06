@@ -26,8 +26,8 @@ module.exports = {
         request.append("template_id", id);
         request.append("username", config.imgflip_user);
         request.append("password", config.imgflip_pwd);
-        request.append("text0", "\\" + boxes[0]);
-        request.append("text1", `${boxes[1]}`);
+        request.append("text0", boxes[0]);
+        request.append("text1", boxes[1]);
         post_memes = await fetch('https://api.imgflip.com/caption_image', {
             method: 'POST',
             body: request
