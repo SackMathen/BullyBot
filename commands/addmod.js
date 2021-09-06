@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, roleMention } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { isStaff } = require('../helpers/elevation_check');
 const fs = require('fs');
 
@@ -19,8 +19,8 @@ class AddMod {
                     return await interaction.reply("That role is already a moderator!");
                 } else {
                     json_mods.mods.push(role.id);
-                    fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));
-                    return await interaction.reply(roleMention(role.name) + " has been added to the moderator list!");          
+                    fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));     
+                    return await interaction.reply(`${role.name} has been added to the moderator list!`);          
                 }
             } else {
                 return await interaction.reply("Only moderators and administrators can use this command!");
