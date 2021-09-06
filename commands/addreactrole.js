@@ -45,6 +45,6 @@ class AddReactRole {
     };
 }
 
-inst_unwatch = new AddReactRole();
+inst_addreactrole = new AddReactRole();
 
-module.exports = inst_unwatch;
+module.exports = inst_addreactrole;
