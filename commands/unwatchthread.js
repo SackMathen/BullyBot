@@ -10,7 +10,6 @@ class UnWatchThread {
         return api_command;
     }
     async execute(interaction) {
-        if (!interaction.isCommand()) return;
         if (interaction.commandName === 'unwatchthread') {
             const thread = interaction.options.getChannel('thread');
             if (thread.isThread()) {
