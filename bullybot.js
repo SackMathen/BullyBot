@@ -6,7 +6,7 @@ const fs = require('fs');
 
 // Events
 const PermaThreads = require('./events/permathreads');
-const ReactRole = require ('./events/reactrole');
+const ReactRole = require('./events/reactrole');
 const ReactUnRole = require('./events/reactunrole');
 
 // Commands
@@ -21,18 +21,18 @@ const MakeMeme = require('./commands/makememe');
 // Config
 const config = require('./config.json');
 
-const rest = new REST({version: '9'}).setToken(config.access_token);
+const rest = new REST({ version: '9' }).setToken(config.access_token);
 const api_commands = [];
 
-api_commands.push(WatchThread.command(), 
-UnWatchThread.command(), 
-AddReactRole.command(), 
-RemoveReactRole.command(), 
-AddMod.command(), 
-RemoveMod.command(),
-...MakeMeme.command());
+api_commands.push(WatchThread.command(),
+	UnWatchThread.command(),
+	AddReactRole.command(),
+	RemoveReactRole.command(),
+	AddMod.command(),
+	RemoveMod.command(),
+	...MakeMeme.command());
 
-(async() => {
+(async () => {
 	try {
 		await rest.put(
 			Routes.applicationGuildCommands(config.client_id, config.guild_id),
@@ -44,39 +44,40 @@ RemoveMod.command(),
 })();
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+const client = new Client({
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
- });
+});
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
 	console.log('Ready!');
-	client.user.setActivity('the game of life', {type: 'PLAYING'})
+	client.user.setActivity('the game of life', { type: 'PLAYING' })
 });
 
 client.on('interactionCreate', (interaction) => {
 	if (interaction.isCommand()) {
 		// Quick Patch for MakeMeme
-		if(!MakeMeme.execute(interaction)) {
-		// Admin Flagged Commands
-		const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
-		let canAccess = false;
-		for(let element in json_mods.mods) {
-		if(interaction.member.roles.cache.some(role=> role.id === json_mods.mods[element])) {
-			canAccess = true;
+		if (!MakeMeme.execute(interaction)) {
+			// Admin Flagged Commands
+			const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
+			let canAccess = false;
+			for (let element in json_mods.mods) {
+				if (interaction.member.roles.cache.some(role => role.id === json_mods.mods[element])) {
+					canAccess = true;
+				}
 			}
-		}
 
-		if (canAccess || interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-			AddMod.execute(interaction);
-			RemoveMod.execute(interaction);
-			WatchThread.execute(interaction);
-			UnWatchThread.execute(interaction);
-			AddReactRole.execute(interaction);
-			RemoveReactRole.execute(interaction);
-		} else {
-			interaction.reply("Commands are for mods ya ding-dong!");
-		}
+			if (canAccess || interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+				AddMod.execute(interaction);
+				RemoveMod.execute(interaction);
+				WatchThread.execute(interaction);
+				UnWatchThread.execute(interaction);
+				AddReactRole.execute(interaction);
+				RemoveReactRole.execute(interaction);
+			} else {
+				interaction.reply("Commands are for mods ya ding-dong!");
+			}
 		}
 	}
 });
