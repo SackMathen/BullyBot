@@ -29,14 +29,8 @@ UnWatchThread.command(),
 AddReactRole.command(), 
 RemoveReactRole.command(), 
 AddMod.command(), 
-RemoveMod.command());
-
-// Special Command Pushing for Memes (its dynamic)
-// I think this can be replaced with api_commands.push(...MakeMeme.command());
-for (let command of MakeMeme.command()) {
-	api_commands.push(command);
-}
-
+RemoveMod.command(),
+...MakeMeme.command());
 
 (async() => {
 	try {
@@ -62,6 +56,9 @@ client.once('ready', () => {
 
 client.on('interactionCreate', (interaction) => {
 	if (interaction.isCommand()) {
+		// Quick Patch for MakeMeme
+		if(!MakeMeme.execute(interaction)) {
+		// Admin Flagged Commands
 		const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
 		let canAccess = false;
 		for(let element in json_mods.mods) {
@@ -70,16 +67,16 @@ client.on('interactionCreate', (interaction) => {
 			}
 		}
 
-		if (!canAccess && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-			interaction.reply("Commands are for mods ya ding-dong!");
-		} else {
+		if (canAccess || interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
 			AddMod.execute(interaction);
 			RemoveMod.execute(interaction);
 			WatchThread.execute(interaction);
 			UnWatchThread.execute(interaction);
 			AddReactRole.execute(interaction);
 			RemoveReactRole.execute(interaction);
-			MakeMeme.execute(interaction);
+		} else {
+			interaction.reply("Commands are for mods ya ding-dong!");
+		}
 		}
 	}
 });

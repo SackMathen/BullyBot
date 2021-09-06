@@ -50,6 +50,8 @@ class MakeMeme {
             var box_2 = interaction.options.getString("textboxtwo");
             var img_url = await meme_engine.getMeme(meme_id, [box_1, box_2]);
             return await interaction.reply(img_url);
+        } else {
+            return false;
         }
     };
 }
