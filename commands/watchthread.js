@@ -10,7 +10,6 @@ class WatchThread {
         return api_command;
     }
     async execute(interaction) {
-        if (!interaction.isCommand()) return;
         if(interaction.commandName === 'watchthread') {
             const thread = interaction.options.getChannel('thread');
             if (thread.isThread()) {
@@ -25,6 +24,6 @@ class WatchThread {
     };
 }
 
-inst_unwatch = new WatchThread();
+inst_watch = new WatchThread();
 
-module.exports = inst_unwatch;
+module.exports = inst_watch;
