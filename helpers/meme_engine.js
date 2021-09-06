@@ -1,7 +1,6 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
 const fetch = require('node-fetch');
-const config = require('../config.json');
 const fs = require('fs');
+const config = require('../config.json');
 
 (async() => {
     const json_memes = JSON.parse(fs.readFileSync("persistent/memegen.json"));
@@ -29,7 +28,6 @@ module.exports = {
         request.append("password", config.imgflip_pwd);
         request.append("text0", boxes[0]);
         request.append("text1", boxes[1]);
-        console.log(JSON.stringify(request));
         post_memes = await fetch('https://api.imgflip.com/caption_image', {
             method: 'POST',
             body: request
