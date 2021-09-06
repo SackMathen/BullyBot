@@ -74,11 +74,9 @@ client.on('interactionCreate', (interaction) => {
 			UnWatchThread.execute(interaction);
 			AddReactRole.execute(interaction);
 			RemoveReactRole.execute(interaction);
-		} else {
-			if(!MakeMeme.execute(interaction)) {
-				interaction.reply("Commands are for mods ya ding-dong!");
-			}
 		}
+
+		MakeMeme.execute(interaction);
 	}
 });
 
