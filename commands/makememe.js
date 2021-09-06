@@ -55,7 +55,11 @@ class MakeMeme {
                 box_2 = "";
             }
             var img_url = await meme_engine.getMeme(meme_id, [box_1, box_2]);
-            return await interaction.reply(img_url);
+            if (img_url) {
+                return await interaction.reply(img_url);
+            } else {
+                return await interaction.reply("Oh no, looks like your meme got lost along the way :(");
+            }
         } else {
             return false;
         }
