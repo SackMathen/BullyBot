@@ -36,8 +36,8 @@ function setupMemes() {
     }
     return api_commands;
 }
-class AddMod {
-    constructor() { }
+class MakeMeme {
+    constructor() {}
     command() {
         // Slash Command Building
         const api_command = setupMemes();
@@ -49,12 +49,11 @@ class AddMod {
             var box_1 = interaction.options.getString("textboxone");
             var box_2 = interaction.options.getString("textboxtwo");
             var img_url = await meme_engine.getMeme(meme_id, [box_1, box_2]);
-            console.log(img_url);
             return await interaction.reply(img_url);
         }
     };
 }
 
-inst_addmod = new AddMod();
+inst_makememe = new MakeMeme();
 
-module.exports = inst_addmod;
+module.exports = inst_makememe;
