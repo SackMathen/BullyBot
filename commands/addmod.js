@@ -5,7 +5,7 @@ class AddMod {
     constructor() {}
     command() {
         const api_command = new SlashCommandBuilder().setName("addmod")
-        .setDescription("Adds a role to the moderator list.")
+        .setDescription("Adds a role to the moderator list")
         .addRoleOption(option => option.setName("role").setDescription("The role to add").setRequired(true));
         return api_command;
     }
@@ -21,6 +21,6 @@ class AddMod {
     };
 }
 
-inst_unwatch = new AddMod();
+inst_addmod = new AddMod();
 
-module.exports = inst_unwatch;
+module.exports = inst_addmod;
