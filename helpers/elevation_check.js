@@ -17,6 +17,6 @@ async function isElevated(member) {
 }
 
 module.exports = {
-    isStaff(member) {return isStaff(member)},
-    isElevated(member) {return isElevated(member)}
+    isStaff(member) {return await isStaff(member)},
+    isElevated(member) {return await isElevated(member)}
 }
