@@ -50,24 +50,25 @@ client.once('ready', () => {
 });
 
 client.on('interactionCreate', (interaction) => {
-	const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
-	let canAccess = false;
-	for(let element in json_mods.mods) {
+	if (interaction.isCommand()) {
+		const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
+		let canAccess = false;
+		for(let element in json_mods.mods) {
 		if(interaction.member.roles.cache.some(role=> role.id === json_mods.mods[element])) {
 			canAccess = true;
+			}
 		}
-	}
 
-	if (!canAccess && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-		interaction.reply("Commands are for mods ya ding-dong!");
-
-	} else {
-		AddMod.execute(interaction);
-		RemoveMod.execute(interaction);
-		WatchThread.execute(interaction);
-		UnWatchThread.execute(interaction);
-		AddReactRole.execute(interaction);
-		RemoveReactRole.execute(interaction);
+		if (!canAccess && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+			interaction.reply("Commands are for mods ya ding-dong!");
+		} else {
+			AddMod.execute(interaction);
+			RemoveMod.execute(interaction);
+			WatchThread.execute(interaction);
+			UnWatchThread.execute(interaction);
+			AddReactRole.execute(interaction);
+			RemoveReactRole.execute(interaction);
+		}
 	}
 });
 
