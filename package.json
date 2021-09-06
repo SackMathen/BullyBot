@@ -2,7 +2,7 @@
   "name": "bullybot",
   "version": "1.0.0",
   "description": "MSU Student Hub (MSH) Discord Bot",
-  "main": "index.js",
+  "main": "bullybot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
