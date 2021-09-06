@@ -57,25 +57,12 @@ client.once('ready', () => {
 
 client.on('interactionCreate', (interaction) => {
 	if (interaction.isCommand()) {
-		// Quick Patch for MakeMeme
-		// Admin Flagged Commands
-		const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
-		let canAccess = false;
-		for (let element in json_mods.mods) {
-			if (interaction.member.roles.cache.some(role => role.id === json_mods.mods[element])) {
-				canAccess = true;
-			}
-		}
-
-		if (canAccess || interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-			AddMod.execute(interaction);
-			RemoveMod.execute(interaction);
-			WatchThread.execute(interaction);
-			UnWatchThread.execute(interaction);
-			AddReactRole.execute(interaction);
-			RemoveReactRole.execute(interaction);
-		}
-
+		AddMod.execute(interaction);
+		RemoveMod.execute(interaction);
+		WatchThread.execute(interaction);
+		UnWatchThread.execute(interaction);
+		AddReactRole.execute(interaction);
+		RemoveReactRole.execute(interaction);
 		MakeMeme.execute(interaction);
 	}
 });

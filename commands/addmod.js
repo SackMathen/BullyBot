@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const elevation = require("../helpers/elevation_check");
 const fs = require('fs');
+const { isElevated, isStaff } = require('../helpers/elevation_check');
 
 class AddMod {
     constructor() {}
@@ -11,14 +13,18 @@ class AddMod {
     }
     async execute(interaction) {
         if(interaction.commandName === 'addmod') {
-            const role = interaction.options.getRole('role');
-            const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
-            if (json_mods.mods.includes(`${role.id}`)) {
-                return await interaction.reply("That role is already a moderator!");
+            if (await isStaff(interaction.member)) {
+                const role = interaction.options.getRole('role');
+                const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
+                if (json_mods.mods.includes(`${role.id}`)) {
+                    return await interaction.reply("That role is already a moderator!");
+                } else {
+                    json_mods.mods.push(role.id);
+                    fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));     
+                    return await interaction.reply(`${role.name} has been added to the moderator list!`);          
+                }
             } else {
-                json_mods.mods.push(role.id);
-                fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));     
-                return await interaction.reply(`${role.name} has been added to the moderator list!`);          
+                return await interaction.reply("Only moderators and administrators can use this command!");
             }
         }
     };
