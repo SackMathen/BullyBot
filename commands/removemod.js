@@ -10,7 +10,6 @@ class RemoveMod {
         return api_command;
     }
     async execute(interaction) {
-        if (!interaction.isCommand()) return;
         if (interaction.commandName === 'removemod') {
             const role = interaction.options.getRole('role');
             const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
@@ -24,6 +23,6 @@ class RemoveMod {
     };
 }
 
-inst_unwatch = new RemoveMod();
+inst_removemod = new RemoveMod();
 
-module.exports = inst_unwatch;
+module.exports = inst_removemod;
