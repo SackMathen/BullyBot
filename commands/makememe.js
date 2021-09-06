@@ -48,6 +48,9 @@ class MakeMeme {
             var meme_id = interaction.options.getString('meme');
             var box_1 = interaction.options.getString("textboxone");
             var box_2 = interaction.options.getString("textboxtwo");
+            if (box_2 == undefined) {
+                box_2 = "";
+            }
             var img_url = await meme_engine.getMeme(meme_id, [box_1, box_2]);
             return await interaction.reply(img_url);
         } else {
