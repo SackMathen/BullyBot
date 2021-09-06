@@ -32,6 +32,7 @@ AddMod.command(),
 RemoveMod.command());
 
 // Special Command Pushing for Memes (its dynamic)
+// I think this can be replaced with api_commands.push(...MakeMeme.command());
 for (let command of MakeMeme.command()) {
 	api_commands.push(command);
 }
