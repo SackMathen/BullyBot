@@ -18,6 +18,8 @@ class RemoveMod {
                 json_mods.mods.splice(indexOfModRole, 1);
                 await interaction.reply(`${role.name} has been removed from the moderator list!`);
                 fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));
+            } else {
+                return await interaction.reply(`${role.name} is not on the moderator list!`);
             }
         }
     };

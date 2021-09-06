@@ -13,9 +13,13 @@ class AddMod {
         if(interaction.commandName === 'addmod') {
             const role = interaction.options.getRole('role');
             const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
-            json_mods.mods.push(role.id);
-            await interaction.reply(`${role.name} has been added to the moderator list!`);
-            fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));
+            if (json_mods.mods.includes(`${role.id}`)) {
+                return await interaction.reply("That role is already a moderator!");
+            } else {
+                json_mods.mods.push(role.id);
+                fs.writeFileSync("persistent/moderators.json", JSON.stringify(json_mods));     
+                return await interaction.reply(`${role.name} has been added to the moderator list!`);          
+            }
         }
     };
 }
