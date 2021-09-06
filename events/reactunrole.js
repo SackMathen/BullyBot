@@ -16,5 +16,5 @@ class ReactUnRole {
     }
 }
 
-inst_reactrole = new ReactUnRole();
-module.exports = inst_reactrole;
+inst_reactunrole = new ReactUnRole();
+module.exports = inst_reactunrole;
