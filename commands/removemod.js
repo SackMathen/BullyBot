@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const elevation = require("../helpers/elevation_check");
+const { isStaff } = require('../helpers/elevation_check');
 const fs = require('fs');
 
 class RemoveMod {
@@ -12,7 +12,7 @@ class RemoveMod {
     }
     async execute(interaction) {
         if (interaction.commandName === 'removemod') {
-            if (elevation.isStaff(interaction.member)) {
+            if (await isStaff(interaction.member)) {
                 const role = interaction.options.getRole('role');
                 const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
                 if (json_mods.mods.includes(`${role.id}`)) {

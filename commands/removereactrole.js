@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const elevation = require("../helpers/elevation_check");
 const fs = require('fs');
+const { isElevated } = require('../helpers/elevation_check');
 const config = require('../config.json');
 
 class RemoveReactRole {
@@ -16,7 +16,7 @@ class RemoveReactRole {
     }
     async execute(interaction) {
         if (interaction.commandName === 'removereactrole') {
-            if (elevation.isElevated(interaction.member)) {
+            if (await isElevated(interaction.member)) {
                 const channel = interaction.options.getChannel('channel');
                 const message_id = interaction.options.getString('messageid');
                 const role = interaction.options.getRole('role');

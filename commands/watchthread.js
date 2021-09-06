@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const elevation = require("../helpers/elevation_check");
+const { isElevated } = require("../helpers/elevation_check");
 const fs = require('fs');
 
 class WatchThread {
@@ -12,7 +12,7 @@ class WatchThread {
     }
     async execute(interaction) {
         if (interaction.commandName === 'watchthread') {
-            if (elevation.isElevated(interaction.member)) {
+            if (isElevated(interaction.member)) {
                 const thread = interaction.options.getChannel('thread');
                 if (thread.isThread()) {
                     const json_threads = JSON.parse(fs.readFileSync("persistent/permathreads.json"));

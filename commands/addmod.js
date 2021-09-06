@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const elevation = require("../helpers/elevation_check");
+const { isStaff } = require('../helpers/elevation_check');
 const fs = require('fs');
-const { isElevated, isStaff } = require('../helpers/elevation_check');
 
 class AddMod {
     constructor() {}
