@@ -75,7 +75,7 @@ client.on('interactionCreate', (interaction) => {
 			AddReactRole.execute(interaction);
 			RemoveReactRole.execute(interaction);
 		} else {
-			if(!(await MakeMeme.execute(interaction))) {
+			if(!MakeMeme.execute(interaction)) {
 				interaction.reply("Commands are for mods ya ding-dong!");
 			}
 		}
