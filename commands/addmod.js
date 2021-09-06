@@ -10,7 +10,6 @@ class AddMod {
         return api_command;
     }
     async execute(interaction) {
-        if (!interaction.isCommand()) return;
         if(interaction.commandName === 'addmod') {
             const role = interaction.options.getRole('role');
             const json_mods = JSON.parse(fs.readFileSync("persistent/moderators.json"));
