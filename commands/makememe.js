@@ -48,6 +48,8 @@ class MakeMeme {
             var meme_id = interaction.options.getString('meme');
             var box_1 = interaction.options.getString("textboxone") || "";
             var box_2 = interaction.options.getString("textboxtwo") || "";
+
+            box_1 = box_1=='0' ? "O" : box_1; // Yes this hardcoded. Fight me
             
             var img_url = await meme_engine.getMeme(meme_id, [box_1, box_2]);
             if (img_url) {
