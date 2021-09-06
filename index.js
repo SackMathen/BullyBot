@@ -16,7 +16,7 @@ const AddReactRole = require('./commands/addreactrole');
 const RemoveReactRole = require('./commands/removereactrole');
 const AddMod = require('./commands/addmod');
 const RemoveMod = require('./commands/removemod');
-
+const MakeMeme = require('./commands/makememe');
 
 // Config
 const config = require('./config.json');
@@ -24,7 +24,17 @@ const config = require('./config.json');
 const rest = new REST({version: '9'}).setToken(config.access_token);
 const api_commands = [];
 
-api_commands.push(WatchThread.command(), UnWatchThread.command(), AddReactRole.command(), RemoveReactRole.command(), AddMod.command(), RemoveMod.command());
+api_commands.push(WatchThread.command(), 
+UnWatchThread.command(), 
+AddReactRole.command(), 
+RemoveReactRole.command(), 
+AddMod.command(), 
+RemoveMod.command());
+
+// Special Command Pushing for Memes (its dynamic)
+for (let command of MakeMeme.command()) {
+	api_commands.push(command);
+}
 
 
 (async() => {
@@ -68,6 +78,7 @@ client.on('interactionCreate', (interaction) => {
 			UnWatchThread.execute(interaction);
 			AddReactRole.execute(interaction);
 			RemoveReactRole.execute(interaction);
+			MakeMeme.execute(interaction);
 		}
 	}
 });
