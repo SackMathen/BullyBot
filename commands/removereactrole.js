@@ -14,7 +14,6 @@ class RemoveReactRole {
         return api_command;
     }
     async execute(interaction) {
-        if (!interaction.isCommand()) return;
         if(interaction.commandName === 'removereactrole') {
             const channel = interaction.options.getChannel('channel');
             const message_id = interaction.options.getString('messageid');
@@ -48,6 +47,6 @@ class RemoveReactRole {
     };
 }
 
-inst_unwatch = new RemoveReactRole();
+inst_removereactrole = new RemoveReactRole();
 
-module.exports = inst_unwatch;
+module.exports = inst_removereactrole;
