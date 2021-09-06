@@ -58,7 +58,7 @@ class MakeMeme {
             if (img_url) {
                 return await interaction.reply(img_url);
             } else {
-                return await interaction.reply("Oh no, looks like your meme got lost along the way :(");
+                return await interaction.reply({content:"Oh no, looks like your meme got lost along the way! (This usually means you didn't provide enough inputs)", ephemeral: true});
             }
         } else {
             return false;
