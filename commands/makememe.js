@@ -3,12 +3,13 @@ const meme_engine = require('../helpers/meme_engine');
 const fs = require('fs');
 const current_memes = JSON.parse(fs.readFileSync("persistent/memegen.json"));
 
+//A function to generate the list of choices for the name of the meme, and associate that with the ID
 function choiceGenerator(cmd, option) {
     var meme_choice_count = 0;
     while (meme_choice_count != 24 && current_memes.memes.length != 0) {
         meme_data = JSON.parse(current_memes.memes[0]);
         if (meme_data.box_count > 2 || meme_data.box_count < 2) {
-            console.log("I'm lazy! You have to have two text boxes for now!");
+            console.log("I'm lazy! You have to have two text boxes for now!"); //Farrar being lazy and only implementing 2 text boxes, though you could just make them all optional and give them the max amount of fields :p
             current_memes.memes.splice(0, 1);
             meme_choice_count++;
             continue;
