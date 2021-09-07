@@ -51,8 +51,8 @@ class MakeMeme {
             var box_2 = interaction.options.getString("textboxtwo") || "";
             
             // Yes this hardcoded. Fight me
-            box_1 = box_1=='0' ? "O" : box_1; 
-            box_2 = box_2=='0' ? "O" : box_2;
+            box_1 = box_1=='0' ? " 0 " : box_1; 
+            box_2 = box_2=='0' ? " 0 " : box_2;
             
             var img_url = await meme_engine.getMeme(meme_id, [box_1, box_2]);
             if (img_url) {
