@@ -1,13 +1,14 @@
 // Require the necessary discord.js classes
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Intents, Permissions } = require('discord.js');
+const { Client, Intents, Permissions, WelcomeChannel } = require('discord.js');
 const fs = require('fs');
 
 // Events
 const PermaThreads = require('./events/permathreads');
 const ReactRole = require('./events/reactrole');
 const ReactUnRole = require('./events/reactunrole');
+const SendWelcome = require('./events/sendwelcome');
 
 // Commands
 const UnWatchThread = require('./commands/unwatchthread');
@@ -17,6 +18,7 @@ const RemoveReactRole = require('./commands/removereactrole');
 const AddMod = require('./commands/addmod');
 const RemoveMod = require('./commands/removemod');
 const MakeMeme = require('./commands/makememe');
+const Welcome = require('./commands/welcome');
 
 // Config
 const config = require('./config.json');
@@ -30,6 +32,7 @@ api_commands.push(WatchThread.command(),
 	RemoveReactRole.command(),
 	AddMod.command(),
 	RemoveMod.command(),
+	Welcome.command(),
 	...MakeMeme.command());
 
 (async () => {
@@ -64,6 +67,7 @@ client.on('interactionCreate', (interaction) => {
 		AddReactRole.execute(interaction);
 		RemoveReactRole.execute(interaction);
 		MakeMeme.execute(interaction);
+		Welcome.execute(interaction);
 	}
 });
 
@@ -98,6 +102,11 @@ client.on('messageReactionRemove', async (reaction, user) => {
 	ReactUnRole.execute(reaction, user);
 });
 
+//On Guild member join, execute welcome message
+client.on('guildMemberAdd', async member => {
+	console.log("GuildMemberAdd");
+	SendWelcome.execute(member);
+});
 
 client.on('threadUpdate', (event) => {
 	PermaThreads.execute(event);
