@@ -13,7 +13,6 @@ module.exports = {
             required: true
         },
     ],
-    userPermissions: ["ADMINISTRATOR"],
     type: 'CHAT_INPUT',
     /**
      *
