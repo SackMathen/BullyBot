@@ -22,7 +22,8 @@ module.exports = {
      */
     run: async (client, interaction, args) => {
         if (!await isStaff(interaction)) {
-            return;
+            interaction.followUp({ content: `Silly Rabbit! Only moderators+ can run this command!`, ephemeral:true});
+            return;    
         }
 
         const mentionRole = roleMention(args[0]);
