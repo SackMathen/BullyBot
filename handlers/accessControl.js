@@ -1,13 +1,12 @@
 const { Permissions } = require('discord.js');
 
 function isMod(client, interaction) {
-    if (!isStaff(interaction)) {
+    if (isStaff(interaction)) {
         return true;
     } else {
          return client.db.get("moderationRoles").then(moderatorRoles => {
              for (let modRole of moderatorRoles) {
                 if(interaction.member.roles.cache.has(modRole)) {
-                    console.log("here");
                     return true;
                 }
              }

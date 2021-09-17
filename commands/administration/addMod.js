@@ -22,7 +22,7 @@ module.exports = {
      */
     run: async (client, interaction, args) => {
         if (!await isStaff(interaction)) {
-            interaction.followUp({ content: `Silly Rabbit! Only moderators+ can run this command!`, ephemeral:true});
+            interaction.followUp({ content: `Silly Rabbit! Only administrators can run this command!`, ephemeral:true});
             return;    
         }
 

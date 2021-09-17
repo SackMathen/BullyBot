@@ -21,4 +21,4 @@ client.on('interactionCreate', async(interaction) => {
             cmd.run(client, interaction, args);
         }
     }
-})
+});
